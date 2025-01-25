@@ -1,0 +1,17 @@
+# Ignore Python bytecode
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore virtual environment folder
+venv/
+env/
+pyvenv.cfg
+
+# Ignore .env file (contains sensitive info)
+.env
+
+# Ignore upload folder if it's temporary or not necessary to track
+upload/
+lib
+lib64
