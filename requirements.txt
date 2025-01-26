@@ -2,3 +2,5 @@ langchain_text_splitters
 sentence_transformers
 pymongo
 python-dotenv
+transformers
+gradio

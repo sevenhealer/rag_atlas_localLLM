@@ -6,6 +6,7 @@ This project demonstrates a **Retriever-Augmented Generation (RAG)** approach to
 
 - **Upload.py**: Reads a text file, splits it into chunks, generates embeddings for each chunk using **Sentence Transformers**, and stores the chunks and embeddings in **MongoDB Atlas**.
 - **Query.py**: Queries the stored embeddings from MongoDB Atlas, retrieves the most similar chunks using **vector search**, and returns the relevant results based on cosine similarity.
+- **Gradio Interface**: A user-friendly web interface to input queries and view retrieved chunks along with generated answers.
 
 ---
 
@@ -42,13 +43,15 @@ The required dependencies include:
 - pymongo: For connecting to MongoDB Atlas.
 - dotenv: For loading environment variables.
 - langchain: For text splitting.
+- gradio: For creating the web interface.
+- transformers: For generating answers using pre-trained language models.
 
 ### 3. Set Up MongoDB Atlas
 
 Create an Atlas account and set up a cluster if you don't have one.
-Create a database (rag) and a collection (rag_v0).
+Create a database (`rag`) and a collection (`rag_v0`).
 Set up Vector Search in MongoDB Atlas (for more details, check the MongoDB documentation).
-Add your MongoDB URI to a .env file:
+Add your MongoDB URI to a `.env` file:
 
 ```bash
 MONGO_URI="your_mongodb_atlas_uri_here"
@@ -56,7 +59,7 @@ MONGO_URI="your_mongodb_atlas_uri_here"
 
 ### 4. Create Index for Vector Search
 
-In your MongoDB Atlas UI, create an index for vector search in the rag_v0 collection. The index should include a knnVector field for storing the embeddings. Example configuration:
+In your MongoDB Atlas UI, create an index for vector search in the `rag_v0` collection. The index should include a `knnVector` field for storing the embeddings. Example configuration:
 
 ```bash
 {
@@ -73,41 +76,42 @@ In your MongoDB Atlas UI, create an index for vector search in the rag_v0 collec
 }
 ```
 
+---
+
 ## Usage
 
 ### 1. Run the Upload Script
 
-Run upload.py to read the text file, split it into chunks, generate embeddings, and store the results in MongoDB Atlas:
+Run `upload.py` to read the text file, split it into chunks, generate embeddings, and store the results in MongoDB Atlas:
 
 ```bash
 python upload.py
 ```
 
-### 2. Run the Query Script
+### 2. Run the Query Script with Gradio Interface
 
-Run query.py to query the MongoDB database using a sample query:
+Run `query.py` to start the Gradio interface. This interface allows you to input a query, view relevant text chunks, and get a generated answer:
 
 ```bash
 python query.py
 ```
 
-### Example Output
+Access the interface at the URL provided in the terminal (e.g., `http://127.0.0.1:7860`).
 
-After running query.py, you should see output similar to:
+---
 
-```bash
-[
-    {
-        "text": "Deepseek is a term that refers to...",
-        "score": 0.92
-    },
-    {
-        "text": "In the context of deep learning, deepseek...",
-        "score": 0.89
-    },
-    {
-        "text": "Deepseek uses advanced search techniques...",
-        "score": 0.85
-    }
-]
-```
+## Example Output
+
+After entering a query in the Gradio interface, the output will include:
+
+1. **Retrieved Chunks**:
+   ```
+   Deepseek is a term that refers to...
+   In the context of deep learning, deepseek...
+   Deepseek uses advanced search techniques...
+   ```
+
+2. **Generated Answer**:
+   ```
+   Deepseek is a system developed in 2021 to...
+   ```
